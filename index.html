@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YolGo</title>
+    <meta charset="UTF8">
+</head>
+<body>
+    <div id="app">
+        <div id="topbar">
+            <div id="brand">
+                <img id="logo" alt="YolGo logo">
+            </div>
+
+            <div id="langBar" aria-label="Language selector">
+                <button class="langBtn" dataLang="en">English</button>
+                <button class="langBtn" dataLang="az">Azərbaycan</button>
+                <button class="langBtn" dataLang="ru">Русский</button>
+                <button class="langBtn" dataLang="es">Español</button>
+            </div>
+        </div>
+
+        <div id="hero">
+            <h1 id="title"></h1>
+            <p id="subtitle"></p>
+
+            <div id="ctaRow">
+                <a id="ctaAppStore" href="#" rel="noopener">App Store</a>
+                <a id="ctaGooglePlay" href="#" rel="noopener">Google Play</a>
+            </div>
+
+            <p id="note"></p>
+        </div>
+
+        <div id="cards">
+            <div class="card">
+                <h2 id="card1Title"></h2>
+                <p id="card1Body"></p>
+            </div>
+
+            <div class="card">
+                <h2 id="card2Title"></h2>
+                <div id="services"></div>
+            </div>
+
+            <div class="card">
+                <h2 id="card3Title"></h2>
+                <p id="card3Body"></p>
+                <div id="contactRow">
+                    <a id="contactEmail" href="#"></a>
+                    <span id="contactSep"></span>
+                    <a id="contactInstagram" href="#" rel="noopener">Instagram</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <span id="footerText"></span>
+        </div>
+    </div>
+
+<script>
+(function () {
+    var brandBlue = "#20C4F4";
+    var brandNavy = "#0B1B2E";
+    var brandInk = "#0F172A";
+    var brandCard = "#0E2238";
+    var brandText = "#EAF6FF";
+
+    var copy = {
+        en: {
+            title: "YolGo",
+            subtitle: "On demand services in one app",
+            note: "Launching soon in Azerbaijan and Spain",
+            card1Title: "How it works",
+            card1Body: "Choose a service, set your time, and a verified provider completes the job. Payments are handled securely in app.",
+            card2Title: "Services",
+            services: [
+                "Plumber",
+                "Electrician",
+                "Handyman and small repairs",
+                "Furniture assembly",
+                "Small deliveries",
+                "Gardening",
+                "Air conditioner repair",
+                "CCTV installation",
+                "Cleaning"
+            ],
+            card3Title: "Contact",
+            card3Body: "Want to partner as a service provider or business",
+            footerText: "© " + new Date().getFullYear() + " YolGo. All rights reserved."
+        },
+        az: {
+            title: "YolGo",
+            subtitle: "Bütün xidmətlər 1 tətbiqdə",
+            note: "Azərbaycan və İspaniyada tezliklə istifadəyə veriləcək",
+            card1Title: "Necə işləyir",
+            card1Body: "Xidməti seçin, vaxtı təyin edin və təsdiqlənmiş ustamız işi tamamlasın. Ödənişlər tətbiq daxilində təhlükəsiz aparılır.",
+            card2Title: "Xidmətlər",
+            services: [
+                "Santexnik",
+                "Elektrik ustası",
+                "Usta və xırda təmir",
+                "Mebel yığılması",
+                "Kiçik çatdırılmalar",
+                "Bağbanlıq",
+                "Kondisioner təmiri",
+                "CCTV quraşdırılması",
+                "Təmizlik"
+            ],
+            card3Title: "Əlaqə",
+            card3Body: "Xidmət göstərən və ya biznes tərəfdaş kimi qoşulmaq istəyirsiniz",
+            footerText: "© " + new Date().getFullYear() + " YolGo. Bütün hüquqlar qorunur."
+        },
+        ru: {
+            title: "YolGo",
+            subtitle: "Сервисы по запросу в одном приложении",
+            note: "Скоро запуск в Азербайджане и Испании",
+            card1Title: "Как это работает",
+            card1Body: "Выберите услугу, укажите время, и проверенный исполнитель выполнит работу. Оплата проходит безопасно в приложении.",
+            card2Title: "Услуги",
+            services: [
+                "Сантехник",
+                "Электрик",
+                "Мелкий ремонт и мастер на час",
+                "Сборка мебели",
+                "Небольшие доставки",
+                "Садовые работы",
+                "Ремонт кондиционеров",
+                "Установка CCTV",
+                "Уборка"
+            ],
+            card3Title: "Контакты",
+            card3Body: "Хотите стать исполнителем или партнером для бизнеса",
+            footerText: "© " + new Date().getFullYear() + " YolGo. Все права защищены."
+        },
+        es: {
+            title: "YolGo",
+            subtitle: "Servicios bajo demanda en una sola app",
+            note: "Lanzamiento pronto en Azerbaiyán y España",
+            card1Title: "Cómo funciona",
+            card1Body: "Elige un servicio, fija la hora y un proveedor verificado realiza el trabajo. Los pagos se gestionan de forma segura dentro de la app.",
+            card2Title: "Servicios",
+            services: [
+                "Fontanero",
+                "Electricista",
+                "Manitas y pequeñas reparaciones",
+                "Montaje de muebles",
+                "Pequeñas entregas",
+                "Jardinería",
+                "Reparación de aire acondicionado",
+                "Instalación de CCTV",
+                "Limpieza"
+            ],
+            card3Title: "Contacto",
+            card3Body: "Quieres colaborar como proveedor de servicios o como empresa",
+            footerText: "© " + new Date().getFullYear() + " YolGo. Todos los derechos reservados."
+        }
+    };
+
+    function el(id) { return document.getElementById(id); }
+
+    function styleAll() {
+        document.body.style.margin = "0";
+        document.body.style.background = "linearGradient(180deg, " + brandNavy + " 0%, " + brandInk + " 100%)";
+        document.body.style.color = brandText;
+        document.body.style.fontFamily = "Arial, sans serif";
+
+        var app = el("app");
+        app.style.maxWidth = "1100px";
+        app.style.margin = "0 auto";
+        app.style.padding = "24px";
+
+        var topbar = el("topbar");
+        topbar.style.display = "flex";
+        topbar.style.flexWrap = "wrap";
+        topbar.style.alignItems = "center";
+        topbar.style.justifyContent = "spaceBetween";
+        topbar.style.gap = "16px";
+        topbar.style.padding = "12px 0";
+
+        var brand = el("brand");
+        brand.style.display = "flex";
+        brand.style.alignItems = "center";
+        brand.style.gap = "12px";
+
+        var logo = el("logo");
+        logo.src = "yolgo.png";
+        logo.style.height = "56px";
+        logo.style.width = "auto";
+        logo.style.maxWidth = "260px";
+        logo.style.objectFit = "contain";
+        logo.onerror = function () {
+            logo.alt = "Upload your logo as yolgo.png in this repository";
+        };
+
+        var langBar = el("langBar");
+        langBar.style.display = "flex";
+        langBar.style.flexWrap = "wrap";
+        langBar.style.gap = "10px";
+        langBar.style.alignItems = "center";
+
+        var buttons = document.querySelectorAll(".langBtn");
+        buttons.forEach(function (b) {
+            b.style.cursor = "pointer";
+            b.style.border = "1px solid rgba(255,255,255,0.18)";
+            b.style.background = "rgba(255,255,255,0.06)";
+            b.style.color = brandText;
+            b.style.padding = "10px 12px";
+            b.style.borderRadius = "10px";
+            b.style.fontSize = "14px";
+        });
+
+        var hero = el("hero");
+        hero.style.padding = "28px 0 10px 0";
+
+        var title = el("title");
+        title.style.margin = "10px 0 8px 0";
+        title.style.fontSize = "52px";
+        title.style.letterSpacing = "0.5px";
+
+        var subtitle = el("subtitle");
+        subtitle.style.margin = "0 0 16px 0";
+        subtitle.style.fontSize = "18px";
+        subtitle.style.opacity = "0.9";
+
+        var ctaRow = el("ctaRow");
+        ctaRow.style.display = "flex";
+        ctaRow.style.flexWrap = "wrap";
+        ctaRow.style.gap = "12px";
+        ctaRow.style.margin = "16px 0 10px 0";
+
+        var ctaAppStore = el("ctaAppStore");
+        var ctaGooglePlay = el("ctaGooglePlay");
+        [ctaAppStore, ctaGooglePlay].forEach(function (a) {
+            a.style.display = "inlineBlock";
+            a.style.textDecoration = "none";
+            a.style.padding = "14px 16px";
+            a.style.borderRadius = "12px";
+            a.style.fontWeight = "700";
+            a.style.border = "1px solid rgba(255,255,255,0.15)";
+        });
+        ctaAppStore.style.background = "rgba(255,255,255,0.08)";
+        ctaAppStore.style.color = brandText;
+        ctaGooglePlay.style.background = brandBlue;
+        ctaGooglePlay.style.color = brandNavy;
+
+        var note = el("note");
+        note.style.margin = "10px 0 0 0";
+        note.style.opacity = "0.85";
+
+        var cards = el("cards");
+        cards.style.display = "grid";
+        cards.style.gridTemplateColumns = "repeat(autoFit, minmax(260px, 1fr))";
+        cards.style.gap = "14px";
+        cards.style.marginTop = "18px";
+
+        var cardEls = document.querySelectorAll(".card");
+        cardEls.forEach(function (c) {
+            c.style.background = "linearGradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)";
+            c.style.border = "1px solid rgba(255,255,255,0.12)";
+            c.style.borderRadius = "16px";
+            c.style.padding = "18px";
+            c.style.boxShadow = "0 10px 24px rgba(0,0,0,0.25)";
+        });
+
+        var headings = document.querySelectorAll(".card h2");
+        headings.forEach(function (h) {
+            h.style.margin = "0 0 10px 0";
+            h.style.fontSize = "18px";
+        });
+
+        var services = el("services");
+        services.style.display = "flex";
+        services.style.flexWrap = "wrap";
+        services.style.gap = "10px";
+
+        var contactRow = el("contactRow");
+        contactRow.style.display = "flex";
+        contactRow.style.flexWrap = "wrap";
+        contactRow.style.gap = "10px";
+        contactRow.style.marginTop = "10px";
+        contactRow.style.alignItems = "center";
+
+        var contactEmail = el("contactEmail");
+        contactEmail.style.color = brandBlue;
+        contactEmail.style.textDecoration = "none";
+        contactEmail.style.fontWeight = "700";
+
+        var contactInstagram = el("contactInstagram");
+        contactInstagram.style.color = brandBlue;
+        contactInstagram.style.textDecoration = "none";
+        contactInstagram.style.fontWeight = "700";
+
+        var footer = el("footer");
+        footer.style.marginTop = "26px";
+        footer.style.padding = "18px 0";
+        footer.style.opacity = "0.75";
+        footer.style.fontSize = "14px";
+        footer.style.textAlign = "center";
+    }
+
+    function setActiveButton(lang) {
+        var buttons = document.querySelectorAll(".langBtn");
+        buttons.forEach(function (b) {
+            var isActive = b.getAttribute("dataLang") === lang;
+            b.style.background = isActive ? "rgba(32,196,244,0.18)" : "rgba(255,255,255,0.06)";
+            b.style.borderColor = isActive ? "rgba(32,196,244,0.55)" : "rgba(255,255,255,0.18)";
+        });
+    }
+
+    function render(lang) {
+        var t = copy[lang] || copy.en;
+
+        el("title").textContent = t.title;
+        el("subtitle").textContent = t.subtitle;
+        el("note").textContent = t.note;
+
+        el("card1Title").textContent = t.card1Title;
+        el("card1Body").textContent = t.card1Body;
+
+        el("card2Title").textContent = t.card2Title;
+
+        var servicesWrap = el("services");
+        servicesWrap.innerHTML = "";
+        t.services.forEach(function (s) {
+            var pill = document.createElement("span");
+            pill.textContent = s;
+            pill.style.padding = "10px 12px";
+            pill.style.borderRadius = "999px";
+            pill.style.background = "rgba(11,27,46,0.6)";
+            pill.style.border = "1px solid rgba(255,255,255,0.12)";
+            pill.style.fontSize = "14px";
+            pill.style.whiteSpace = "nowrap";
+            servicesWrap.appendChild(pill);
+        });
+
+        el("card3Title").textContent = t.card3Title;
+        el("card3Body").textContent = t.card3Body;
+
+        var email = "hello@yolgo.com";
+        el("contactEmail").textContent = email;
+        el("contactEmail").href = "mailto:" + email;
+
+        el("contactSep").textContent = " | ";
+
+        el("footerText").textContent = t.footerText;
+
+        setActiveButton(lang);
+        try { localStorage.setItem("yolgoLang", lang); } catch (e) {}
+    }
+
+    function initLang() {
+        var saved = "en";
+        try {
+            var v = localStorage.getItem("yolgoLang");
+            if (v) saved = v;
+        } catch (e) {}
+
+        var buttons = document.querySelectorAll(".langBtn");
+        buttons.forEach(function (b) {
+            b.addEventListener("click", function () {
+                var lang = b.getAttribute("dataLang");
+                render(lang);
+            });
+        });
+
+        render(saved);
+    }
+
+    styleAll();
+    initLang();
+})();
+</script>
+</body>
+</html>
